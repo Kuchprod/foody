@@ -12,6 +12,10 @@
 		1371E5C61C639AF600B99829 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5C51C639AF600B99829 /* GameScene.sks */; };
 		1371E5C81C639AF600B99829 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5C71C639AF600B99829 /* Assets.xcassets */; };
 		1371E5CB1C639AF600B99829 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5C91C639AF600B99829 /* MainMenu.xib */; };
+		1371E5D41C63A36B00B99829 /* Bone.png in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5D31C63A36B00B99829 /* Bone.png */; };
+		1371E5D61C63A4A600B99829 /* pug_Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5D51C63A4A600B99829 /* pug_Down.png */; };
+		1371E5D81C63A4AF00B99829 /* pug_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5D71C63A4AF00B99829 /* pug_up.png */; };
+		1371E5DA1C63A93800B99829 /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 1371E5D91C63A93800B99829 /* wall.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		1371E5C71C639AF600B99829 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1371E5CA1C639AF600B99829 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1371E5CC1C639AF600B99829 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1371E5D31C63A36B00B99829 /* Bone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bone.png; sourceTree = "<group>"; };
+		1371E5D51C63A4A600B99829 /* pug_Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pug_Down.png; sourceTree = "<group>"; };
+		1371E5D71C63A4AF00B99829 /* pug_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pug_up.png; sourceTree = "<group>"; };
+		1371E5D91C63A93800B99829 /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +62,7 @@
 		1371E5C01C639AF600B99829 /* foody */ = {
 			isa = PBXGroup;
 			children = (
+				1371E5D21C63A1CF00B99829 /* img */,
 				1371E5C11C639AF600B99829 /* AppDelegate.swift */,
 				1371E5C31C639AF600B99829 /* GameScene.swift */,
 				1371E5C51C639AF600B99829 /* GameScene.sks */,
@@ -62,6 +71,17 @@
 				1371E5CC1C639AF600B99829 /* Info.plist */,
 			);
 			path = foody;
+			sourceTree = "<group>";
+		};
+		1371E5D21C63A1CF00B99829 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				1371E5D31C63A36B00B99829 /* Bone.png */,
+				1371E5D71C63A4AF00B99829 /* pug_up.png */,
+				1371E5D91C63A93800B99829 /* wall.png */,
+				1371E5D51C63A4A600B99829 /* pug_Down.png */,
+			);
+			name = img;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,9 +142,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1371E5D41C63A36B00B99829 /* Bone.png in Resources */,
+				1371E5D81C63A4AF00B99829 /* pug_up.png in Resources */,
 				1371E5C81C639AF600B99829 /* Assets.xcassets in Resources */,
 				1371E5C61C639AF600B99829 /* GameScene.sks in Resources */,
 				1371E5CB1C639AF600B99829 /* MainMenu.xib in Resources */,
+				1371E5D61C63A4A600B99829 /* pug_Down.png in Resources */,
+				1371E5DA1C63A93800B99829 /* wall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
