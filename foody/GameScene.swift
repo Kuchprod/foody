@@ -204,7 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for var i = 0; i < nbTrap; i++ {
                 bone = Food(name: "bone", spriteName: "bone", position: randomPoint())
                 self.addChild(self.bone.sprite)
-                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint())
+                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint(), num: i)
                 self.addChild(self.enemy.sprite)
             }
             for var j = nbTrap; j < nbBone; j++ {
@@ -216,11 +216,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for var i = 0; i < nbBone; i++ {
                 bone = Food(name: "bone", spriteName: "bone", position: randomPoint())
                 self.addChild(self.bone.sprite)
-                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint())
+                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint(), num: i)
                 self.addChild(self.enemy.sprite)
             }
             for var j = nbBone; j < nbTrap; j++ {
-                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint())
+                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint(), num: j)
                 self.addChild(self.enemy.sprite)
             }
         }
