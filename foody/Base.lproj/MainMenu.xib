@@ -104,14 +104,14 @@
         <window title="foody" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
-            <rect key="contentRect" x="0.0" y="0.0" width="1024" height="768"/>
+            <rect key="contentRect" x="0.0" y="0.0" width="925" height="650"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                <rect key="frame" x="0.0" y="0.0" width="925" height="650"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="539" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="925" height="650"/>
                     </customView>
                 </subviews>
                 <constraints>
@@ -121,6 +121,7 @@
                     <constraint firstItem="539" firstAttribute="leading" secondItem="372" secondAttribute="leading" id="544"/>
                 </constraints>
             </view>
+            <point key="canvasLocation" x="331.5" y="74"/>
         </window>
         <customObject id="494" customClass="AppDelegate" customModule="foody" customModuleProvider="target">
             <connections>
