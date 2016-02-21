@@ -37,7 +37,7 @@ class User {
         self.sprite.physicsBody?.contactTestBitMask = GameScene.category.tube.rawValue | GameScene.category.bone.rawValue | GameScene.category.trap.rawValue
         self.sprite.physicsBody?.collisionBitMask = GameScene.category.wall.rawValue
         
-        configLight()
+        //configLight()
         configTubeLight()
     }
     

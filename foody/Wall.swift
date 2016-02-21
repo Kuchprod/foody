@@ -12,12 +12,25 @@ import SpriteKit
 class Wall {
     
     var sprite : SKSpriteNode!
+    var width : CGFloat = 0
+    var height : CGFloat = 0
     
     init(name: String, spriteName: String, position: CGPoint, zPosition : CGFloat){
+        
         let trapTexture = SKTexture(imageNamed: spriteName)
         self.sprite = SKSpriteNode(texture: trapTexture, size: CGSize(width:32,height:32))
         self.sprite.name = name
-        self.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.sprite.frame.width, height: self.sprite.frame.height))
+        
+        if name == "tube" {
+            width = self.sprite.frame.width-3
+            height = self.sprite.frame.height-3
+        }
+        if name == "wall" {
+            width = self.sprite.frame.width
+            height = self.sprite.frame.height
+        }
+        
+        self.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.width, height: self.height))
         self.sprite.physicsBody!.dynamic = false
         self.sprite.physicsBody!.pinned = true
         self.sprite.physicsBody!.allowsRotation = false

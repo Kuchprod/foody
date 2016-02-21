@@ -62,8 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        //Swift.print("A = \(contact.bodyA.node?.name)")
-        //Swift.print("B = \(contact.bodyB.node?.name)")
+        Swift.print("A = \(contact.bodyA.node?.name)")
+        Swift.print("B = \(contact.bodyB.node?.name)")
         if(contact.bodyB.node?.name == "bone"){
             self.runAction(dogWoof)
             contact.bodyB.node?.removeFromParent()
