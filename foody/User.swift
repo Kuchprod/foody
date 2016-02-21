@@ -36,7 +36,8 @@ class User {
         self.sprite.physicsBody?.categoryBitMask = GameScene.category.pug.rawValue
         self.sprite.physicsBody?.contactTestBitMask = GameScene.category.tube.rawValue | GameScene.category.bone.rawValue | GameScene.category.trap.rawValue
         self.sprite.physicsBody?.collisionBitMask = GameScene.category.wall.rawValue
-        //configLight()
+        
+        configLight()
         configTubeLight()
     }
     
@@ -46,7 +47,7 @@ class User {
         self.light.falloff = 3
         self.light.categoryBitMask = GameScene.category.light.rawValue
         self.light.position = CGPointMake(0,0)
-        self.light.lightColor = NSColor.greenColor()
+        self.light.lightColor = NSColor.whiteColor()
         //self.light.shadowColor = NSColor.redColor()
         self.light.ambientColor = NSColor.blackColor()
         self.light.zPosition = 1

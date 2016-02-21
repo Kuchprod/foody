@@ -35,24 +35,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lab_life = SKLabelNode(fontNamed:"Chalkduster")
     var lab_level = SKLabelNode(fontNamed:"Chalkduster")
     
-    var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up.png")
-    var wall : SKSpriteNode! = nil
-    var bone : SKSpriteNode! = nil
-    var tube : SKSpriteNode! = nil
-    var trap : SKSpriteNode! = nil
-    
-    
+    var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up")
+    var enemy : Enemy! = nil
+    var wall : Wall! = nil
+    var bone : Food! = nil
     
     var move_left = SKAction.moveBy(CGVector(dx: -32, dy: 0), duration: 0.02)
     var move_right = SKAction.moveBy(CGVector(dx: 32, dy: 0), duration: 0.02)
     var move_down = SKAction.moveBy(CGVector(dx: 0, dy: -32), duration: 0.02)
     var move_up = SKAction.moveBy(CGVector(dx: 0, dy: 32), duration: 0.02)
     
+    let dogWhine = SKAction.playSoundFileNamed("Dog Whine", waitForCompletion: false)
+    let dogWoof = SKAction.playSoundFileNamed("Dog Woof", waitForCompletion: false)
+    let dogloose = SKAction.playSoundFileNamed("Dog Holing At Moon", waitForCompletion: false)
+    
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         self.physicsWorld.contactDelegate = self
         
-        self.addChild(user.sprite)
+        self.addChild(self.user.sprite)
         information()
         buildingWall()
         createBackground()
@@ -64,17 +65,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Swift.print("A = \(contact.bodyA.node?.name)")
         //Swift.print("B = \(contact.bodyB.node?.name)")
         if(contact.bodyB.node?.name == "bone"){
+            self.runAction(dogWoof)
             contact.bodyB.node?.removeFromParent()
             self.user.score++
             self.user.scoreByLevel++
         }
         
         if(contact.bodyB.node?.name == "trap"){
+            self.runAction(dogWhine)
             self.user.life -= 20
             contact.bodyB.node?.removeFromParent()
         }
         
-        if(contact.bodyA.node?.name == "tube" || contact.bodyB.node?.name == "tube"){
+        if(contact.bodyB.node?.name == "tube"){
             nextScene(0.8, finish: false)
         }
         self.lab_life.text = "Life = \(self.user.life)"
@@ -142,7 +145,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(self.lab_life)
     }
     
-    private func randomPoint() -> CGPoint {
+    func randomPoint() -> CGPoint {
         var p = CGPoint(x: randomX(), y: randomY())
         while nodeAtPoint(p).name != nil {
             p = CGPoint(x: randomX(), y: randomY())
@@ -158,137 +161,72 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return (Int(arc4random_uniform(21)+1))*32 + 48
     }
     
-    func createWall() -> SKSpriteNode{
-        let trapTexture = SKTexture(imageNamed: "wall.png")
-        wall = SKSpriteNode(texture: trapTexture, size: CGSize(width:32,height:32))
-        wall.name = "wall"
-        wall.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: wall.frame.width, height: wall.frame.height))
-        wall.physicsBody!.dynamic = false
-        wall.physicsBody!.pinned = true
-        wall.physicsBody!.allowsRotation = false
-        wall.physicsBody!.affectedByGravity = false
-        wall.physicsBody!.categoryBitMask = category.wall.rawValue
-        wall.physicsBody!.collisionBitMask = category.pug.rawValue
-        return wall
-    }
-    
-    
-    func buildingWall(){
-    
+
+    private func buildingWall(){
         var pos = 16
+        let zPositionWall : CGFloat = 2
 
         for var i = 0; i < 31; i++ {
-            wall = createWall()
-            wall.zPosition = 2
-            wall.position = CGPoint(x: pos, y: 16)
-            self.addChild(wall)
+            wall = Wall(name: "wall", spriteName: "wall", position: CGPoint(x: pos, y: 16), zPosition: zPositionWall)
+            self.addChild(wall.sprite)
             
-            wall = createWall()
-            wall.zPosition = 2
-            wall.position = CGPoint(x: pos, y: 752)
-            self.addChild(wall)
+            wall = Wall(name: "wall", spriteName: "wall", position: CGPoint(x: pos, y: 752), zPosition: zPositionWall)
+            self.addChild(wall.sprite)
             
             if i < 24 {
-                wall = createWall()
-                wall.zPosition = 2
-                wall.position = CGPoint(x: 16, y: pos)
-                self.addChild(wall)
+                wall = Wall(name: "wall", spriteName: "wall", position: CGPoint(x: 16, y: pos), zPosition: zPositionWall)
+                self.addChild(wall.sprite)
             
-                wall = createWall()
-                wall.zPosition = 2
-                wall.position = CGPoint(x: 1008, y: pos)
-                self.addChild(wall)
+                wall = Wall(name: "wall", spriteName: "wall", position: CGPoint(x: 1008, y: pos), zPosition: zPositionWall)
+                self.addChild(wall.sprite)
             }
             pos += 32
         }
 
         for var j = 0; j < nbWall; j++ {
-            wall = createWall()
             let p = randomPoint()
-            wall.position = p
+            wall = Wall(name: "wall", spriteName: "wall", position: p, zPosition: 0)
             if j == 1 {
-                createTube(p)
-                wall.lightingBitMask = category.light.rawValue | category.tube_light.rawValue
+                wall = Wall(name: "tube", spriteName: "wall", position: p, zPosition: 0)
+                wall.sprite.lightingBitMask = category.light.rawValue | category.tube_light.rawValue
             }
             else{
-                wall.lightingBitMask = category.light.rawValue
+                wall.sprite.lightingBitMask = category.light.rawValue
             }
-            self.addChild(wall)
+            self.addChild(wall.sprite)
         }
 
     }
-    
-    func createBone() {
-        let trapTexture = SKTexture(imageNamed: "bone.png")
-        bone = SKSpriteNode(texture: trapTexture, size: CGSize(width:32,height:32))
-        bone.name = "bone"
-        bone.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: bone.frame.width-2, height: bone.frame.height-2))
-        bone.physicsBody!.dynamic = false
-        bone.physicsBody!.allowsRotation = false
-        bone.physicsBody!.affectedByGravity = false
-        bone.physicsBody!.categoryBitMask = category.bone.rawValue
-        bone.physicsBody!.contactTestBitMask = category.pug.rawValue
-        bone.physicsBody!.collisionBitMask = 0
-        bone.lightingBitMask = category.light.rawValue
-        bone.position = randomPoint()
-        
-        self.addChild(bone)
-    }
-    
-    func createTrap(){
-        let trapTexture = SKTexture(imageNamed: "trap.png")
-        trap = SKSpriteNode(texture: trapTexture, size: CGSize(width:32,height:32))
-        trap.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: trap.frame.width-2, height: trap.frame.height-2))
-        trap.name = "trap"
-        trap.physicsBody!.dynamic = false
-        trap.physicsBody!.allowsRotation = false
-        trap.physicsBody!.affectedByGravity = false
-        trap.physicsBody!.categoryBitMask = category.trap.rawValue
-        trap.physicsBody!.collisionBitMask = 0
-        trap.physicsBody!.contactTestBitMask = category.pug.rawValue
-        trap.lightingBitMask = category.light.rawValue
-        trap.position = randomPoint()
-        self.addChild(trap)
-    }
 
-    func makeElement() {
+
+    private func makeElement() {
         if(nbBone > nbTrap){
             for var i = 0; i < nbTrap; i++ {
-                createBone()
-                createTrap()
+                bone = Food(name: "bone", spriteName: "bone", position: randomPoint())
+                self.addChild(self.bone.sprite)
+                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint())
+                self.addChild(self.enemy.sprite)
             }
             for var j = nbTrap; j < nbBone; j++ {
-                createBone()
+                bone = Food(name: "bone", spriteName: "bone", position: randomPoint())
+                self.addChild(self.bone.sprite)
             }
         }
         else{
             for var i = 0; i < nbBone; i++ {
-                createBone()
-                createTrap()
+                bone = Food(name: "bone", spriteName: "bone", position: randomPoint())
+                self.addChild(self.bone.sprite)
+                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint())
+                self.addChild(self.enemy.sprite)
             }
             for var j = nbBone; j < nbTrap; j++ {
-                createTrap()
+                enemy = Enemy(name: "trap", spriteName: "trap", position: randomPoint())
+                self.addChild(self.enemy.sprite)
             }
         }
     }
     
-    func createTube(p: CGPoint){
-        let trapTexture = SKTexture(imageNamed: "tube.png")
-        tube = SKSpriteNode(texture: trapTexture, size: CGSize(width:32,height:32))
-        tube.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: tube.frame.width-2, height: tube.frame.height-2))
-        tube.name = "tube"
-        tube.physicsBody!.dynamic = false
-        tube.physicsBody!.allowsRotation = false
-        tube.physicsBody!.affectedByGravity = false
-        tube.physicsBody!.categoryBitMask = category.tube.rawValue
-        tube.physicsBody!.contactTestBitMask = category.pug.rawValue
-        tube.physicsBody!.collisionBitMask = 0
-        tube.position = p
-        tube.hidden = true
-        self.addChild(tube)
-    }
-    
-    func createBackground(){
+    private func createBackground(){
         let backTexture = SKTexture(imageNamed: "dirt_ground")
         let back = SKSpriteNode(texture: backTexture, size: self.frame.size)
         back.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame))
@@ -297,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(back)
     }
     
-    func nextScene(t: NSTimeInterval, finish: Bool){
+    private func nextScene(t: NSTimeInterval, finish: Bool){
         var direc : SKTransitionDirection = SKTransitionDirection.Left
         if user.level % 4 == 2 {
             direc = SKTransitionDirection.Left
@@ -316,6 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(finish){
             scene.nbBone = self.nbBone + 5
             scene.nbTrap = self.nbTrap + 5
+            scene.nbWall = self.nbWall + 1
         }
         else{
             scene.nbBone = self.nbBone - user.scoreByLevel + 2
