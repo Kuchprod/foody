@@ -55,9 +55,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(self.user.sprite)
         information()
+        makeElement()
         buildingWall()
         createBackground()
-        makeElement()
         
     }
     
@@ -164,7 +164,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func buildingWall(){
         var pos = 16
-        let zPositionWall : CGFloat = 2
+        let zPositionWall : CGFloat = 4
 
         for var i = 0; i < 31; i++ {
             wall = Wall(name: "wall", spriteName: "wall", position: CGPoint(x: pos, y: 16), zPosition: zPositionWall)

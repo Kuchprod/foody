@@ -27,14 +27,15 @@ class Enemy {
         self.sprite = SKSpriteNode(texture: trapTexture, size: CGSize(width:32,height:32))
         self.sprite.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: self.sprite.frame.width-2, height: self.sprite.frame.height-2))
         self.sprite.name = name
-        self.sprite.physicsBody!.dynamic = false
+        self.sprite.physicsBody!.dynamic = true
         self.sprite.physicsBody!.allowsRotation = false
         self.sprite.physicsBody!.affectedByGravity = false
         self.sprite.physicsBody!.categoryBitMask = GameScene.category.trap.rawValue
         self.sprite.physicsBody!.collisionBitMask = GameScene.category.wall.rawValue
-        self.sprite.physicsBody!.contactTestBitMask = GameScene.category.pug.rawValue
+        self.sprite.physicsBody!.contactTestBitMask = GameScene.category.pug.rawValue | GameScene.category.wall.rawValue
         self.sprite.lightingBitMask = GameScene.category.light.rawValue
         self.sprite.position = position
+        self.sprite.zPosition = 1
         move()
     }
     

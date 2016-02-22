@@ -44,7 +44,7 @@ class User {
     func configLight(){
         self.light = SKLightNode()
         self.light.name = "light"
-        self.light.falloff = 3
+        self.light.falloff = 1.5
         self.light.categoryBitMask = GameScene.category.light.rawValue
         self.light.position = CGPointMake(0,0)
         self.light.lightColor = NSColor.whiteColor()

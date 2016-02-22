@@ -38,7 +38,7 @@ class Wall {
         self.sprite.physicsBody!.categoryBitMask = GameScene.category.wall.rawValue | GameScene.category.tube.rawValue
         self.sprite.physicsBody!.collisionBitMask = GameScene.category.pug.rawValue | GameScene.category.trap.rawValue
         self.sprite.position = position
-        //self.sprite.zPosition = zPosition
+        self.sprite.zPosition = zPosition
         
         if name == "tube" {
             self.sprite.physicsBody!.contactTestBitMask = GameScene.category.pug.rawValue
