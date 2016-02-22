@@ -35,7 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lab_life = SKLabelNode(fontNamed:"Chalkduster")
     var lab_level = SKLabelNode(fontNamed:"Chalkduster")
     
-    var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up")
+    var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up", level_light: 0)
     var enemy : Enemy! = nil
     var wall : Wall! = nil
     var bone : Food! = nil
@@ -47,7 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let dogWhine = SKAction.playSoundFileNamed("Dog Whine", waitForCompletion: false)
     let dogWoof = SKAction.playSoundFileNamed("Dog Woof", waitForCompletion: false)
-    let dogloose = SKAction.playSoundFileNamed("Dog Holing At Moon", waitForCompletion: false)
+    //let dogloose = SKAction.playSoundFileNamed("Dog Holing At Moon", waitForCompletion: false)
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -62,8 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        Swift.print("A = \(contact.bodyA.node?.name)")
-        Swift.print("B = \(contact.bodyB.node?.name)")
+        //Swift.print("A = \(contact.bodyA.node?.name)")
+        //Swift.print("B = \(contact.bodyB.node?.name)")
         if(contact.bodyB.node?.name == "bone"){
             self.runAction(dogWoof)
             contact.bodyB.node?.removeFromParent()
@@ -83,13 +83,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.lab_life.text = "Life = \(self.user.life)"
         self.lab_score.text = "Score = \(self.user.score)"
         if(self.user.life == 0){
+            
             let trans = SKTransition.fadeWithColor(NSColor.redColor(), duration: 2)
             let scene = GameOver(fileNamed:"GameOver")
             scene!.scaleMode = .Fill
             self.view!.presentScene(scene!, transition: trans)
         }
         else if(self.user.scoreByLevel == nbBone){
-            self.user.level++
             nextScene(0.8, finish: true)
         }
     }
@@ -251,20 +251,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         var trans = SKTransition.pushWithDirection(direc, duration: 0.8)
         let scene = GameScene(size: self.size)
+        
+        scene.nbBone = self.nbBone + 5
+        scene.nbWall = self.nbWall + 1
+        self.user.level++
         if(finish){
-            scene.nbBone = self.nbBone + 5
             scene.nbTrap = self.nbTrap + 5
-            scene.nbWall = self.nbWall + 1
+            self.user.level_light += 0.5
         }
         else{
-            scene.nbBone = self.nbBone - user.scoreByLevel + 2
-            scene.nbTrap = self.nbTrap + 1
+            scene.nbTrap = self.nbTrap + 3
             trans = SKTransition.fadeWithColor(NSColor.whiteColor(), duration: t)
-            
         }
         scene.user.level = self.user.level
         scene.user.score = self.user.score
         scene.user.life = self.user.life
+        scene.user.level_light = self.user.level_light
         self.view!.presentScene(scene, transition: trans)
         
     }

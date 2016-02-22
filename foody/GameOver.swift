@@ -30,10 +30,7 @@ class GameOver : SKScene {
             self.view!.presentScene(scene!, transition: trans)
         }
         else if self.nodeAtPoint(click).name == "quitter" {
-            let trans = SKTransition.flipHorizontalWithDuration(0.5)
-            let scene = StartGame(fileNamed:"StartGame")
-            scene!.scaleMode = .Fill
-            self.view!.presentScene(scene!, transition: trans)
+            NSApplication.sharedApplication().terminate(self)
         }
     }
 }

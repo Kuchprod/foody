@@ -36,10 +36,35 @@ class Enemy {
         self.sprite.lightingBitMask = GameScene.category.light.rawValue
         self.sprite.position = position
         self.sprite.zPosition = 1
-        move()
+        
+        self.move()
+
     }
     
     private func move(){
+        var numMove : Int = 0
+        var i : Int = 0
+        var tabAction : [SKAction] = []
+        var action : SKAction = move_down
+        
+        for i = 0; i < 50; i++ {
+            numMove = Int(arc4random_uniform(4))
+            if numMove % 4 == 0 {
+                action = move_left
+            }
+            else if numMove % 4 == 1 {
+                action = move_right
+            }
+            else if numMove % 4 == 2 {
+                action = move_up
+            }
+            else if numMove % 4 == 3 {
+                action = move_down
+            }
+            tabAction += [action]
+        }
+        self.sprite.runAction(SKAction.repeatActionForever(SKAction.sequence(tabAction)))
+        /*
         let seq1 = SKAction.sequence([move_left, move_down, move_right, move_up])
         let seq2 = SKAction.sequence([move_down, move_right, move_up, move_left])
         let seq3 = SKAction.sequence([move_right, move_up, move_left, move_down])
@@ -57,6 +82,7 @@ class Enemy {
         else if self.num % 4 == 3 {
             self.sprite.runAction(SKAction.repeatActionForever(seq4))
         }
+*/
         
     }
     
