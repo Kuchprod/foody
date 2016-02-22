@@ -16,13 +16,12 @@ class User {
     var scoreByLevel : Int = 0
     var life : Int = 100
     var level : Int = 1
-    var level_light : CGFloat = 0
     
     var sprite : SKSpriteNode!
     var light : SKLightNode!
     var tubeLight : SKLightNode!
     
-    init(name: String,  score: Int, life : Int, spriteName: String, level_light: CGFloat){
+    init(name: String,  score: Int, life : Int, spriteName: String){
         self.nameUser = name
         self.score = score
         self.life = life
@@ -38,14 +37,14 @@ class User {
         self.sprite.physicsBody?.contactTestBitMask = GameScene.category.tube.rawValue | GameScene.category.bone.rawValue | GameScene.category.trap.rawValue
         self.sprite.physicsBody?.collisionBitMask = GameScene.category.wall.rawValue
         
-        //configLight()
+        configLight()
         configTubeLight()
     }
     
     func configLight(){
         self.light = SKLightNode()
         self.light.name = "light"
-        self.light.falloff = level_light
+        self.light.falloff = 2.5
         self.light.categoryBitMask = GameScene.category.light.rawValue
         self.light.position = CGPointMake(0,0)
         self.light.lightColor = NSColor.whiteColor()

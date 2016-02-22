@@ -35,7 +35,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lab_life = SKLabelNode(fontNamed:"Chalkduster")
     var lab_level = SKLabelNode(fontNamed:"Chalkduster")
     
-    var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up", level_light: 0)
+    var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up")
     var enemy : Enemy! = nil
     var wall : Wall! = nil
     var bone : Food! = nil
@@ -62,8 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        //Swift.print("A = \(contact.bodyA.node?.name)")
-        //Swift.print("B = \(contact.bodyB.node?.name)")
+        Swift.print("A = \(contact.bodyA.node?.name)")
+        Swift.print("B = \(contact.bodyB.node?.name)")
         if(contact.bodyB.node?.name == "bone"){
             self.runAction(dogWoof)
             contact.bodyB.node?.removeFromParent()
@@ -77,7 +77,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             contact.bodyB.node?.removeFromParent()
         }
         
-        if(contact.bodyB.node?.name == "tube"){
+        if(contact.bodyA.node?.name == "pug" && contact.bodyB.node?.name == "tube"){
             nextScene(0.8, finish: false)
         }
         self.lab_life.text = "Life = \(self.user.life)"
@@ -257,7 +257,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.user.level++
         if(finish){
             scene.nbTrap = self.nbTrap + 5
-            self.user.level_light += 0.5
         }
         else{
             scene.nbTrap = self.nbTrap + 3
@@ -266,7 +265,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scene.user.level = self.user.level
         scene.user.score = self.user.score
         scene.user.life = self.user.life
-        scene.user.level_light = self.user.level_light
         self.view!.presentScene(scene, transition: trans)
         
     }
