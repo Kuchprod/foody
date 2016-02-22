@@ -27,27 +27,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case tube_light = 64
     }
     
+    // number of element
     var nbBone: Int = 7
     var nbTrap: Int = 5
     var nbWall: Int = 32
 
+    // label
     var lab_score = SKLabelNode(fontNamed:"Chalkduster")
     var lab_life = SKLabelNode(fontNamed:"Chalkduster")
     var lab_level = SKLabelNode(fontNamed:"Chalkduster")
     
+    // element
     var user : User = User(name: "pug", score: 0, life: 100, spriteName: "pug_up")
     var enemy : Enemy! = nil
     var wall : Wall! = nil
     var bone : Food! = nil
     
+    // direction to move
     var move_left = SKAction.moveBy(CGVector(dx: -32, dy: 0), duration: 0.02)
     var move_right = SKAction.moveBy(CGVector(dx: 32, dy: 0), duration: 0.02)
     var move_down = SKAction.moveBy(CGVector(dx: 0, dy: -32), duration: 0.02)
     var move_up = SKAction.moveBy(CGVector(dx: 0, dy: 32), duration: 0.02)
     
+    //sound
     let dogWhine = SKAction.playSoundFileNamed("Dog Whine", waitForCompletion: false)
     let dogWoof = SKAction.playSoundFileNamed("Dog Woof", waitForCompletion: false)
-    //let dogloose = SKAction.playSoundFileNamed("Dog Holing At Moon", waitForCompletion: false)
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -62,8 +66,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        Swift.print("A = \(contact.bodyA.node?.name)")
-        Swift.print("B = \(contact.bodyB.node?.name)")
+        //Swift.print("A = \(contact.bodyA.node?.name)")
+        //Swift.print("B = \(contact.bodyB.node?.name)")
         if(contact.bodyB.node?.name == "bone"){
             self.runAction(dogWoof)
             contact.bodyB.node?.removeFromParent()
@@ -83,7 +87,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.lab_life.text = "Life = \(self.user.life)"
         self.lab_score.text = "Score = \(self.user.score)"
         if(self.user.life == 0){
-            
             let trans = SKTransition.fadeWithColor(NSColor.redColor(), duration: 2)
             let scene = GameOver(fileNamed:"GameOver")
             scene!.scaleMode = .Fill
@@ -125,6 +128,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    // print label
     private func information(){
         self.lab_score.text = "Score = \(user.score)"
         self.lab_score.zPosition = 10
@@ -145,6 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(self.lab_life)
     }
     
+    // generate random point not use
     func randomPoint() -> CGPoint {
         var p = CGPoint(x: randomX(), y: randomY())
         while nodeAtPoint(p).name != nil {
@@ -161,7 +166,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return (Int(arc4random_uniform(21)+1))*32 + 48
     }
     
-
     private func buildingWall(){
         var pos = 16
         let zPositionWall : CGFloat = 4
@@ -197,7 +201,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
     }
-
 
     private func makeElement() {
         if(nbBone > nbTrap){
@@ -236,19 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     private func nextScene(t: NSTimeInterval, finish: Bool){
-        var direc : SKTransitionDirection = SKTransitionDirection.Left
-        if user.level % 4 == 2 {
-            direc = SKTransitionDirection.Left
-        }
-        else if user.level % 4 == 3 {
-            direc = SKTransitionDirection.Up
-        }
-        else if user.level % 4 == 0 {
-            direc = SKTransitionDirection.Right
-        }
-        else if user.level % 4 == 1 {
-            direc = SKTransitionDirection.Down
-        }
+        let direc : SKTransitionDirection = SKTransitionDirection.Left
         var trans = SKTransition.pushWithDirection(direc, duration: 0.8)
         let scene = GameScene(size: self.size)
         
